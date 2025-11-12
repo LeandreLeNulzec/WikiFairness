@@ -1,0 +1,283 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.fates-mlops/"
+     xml:base="http://www.fates-mlops/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:fates-mlops="http://www.fates-mlops/">
+    <owl:Ontology rdf:about="http://www.fates-mlops/"/>
+    
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.fates-mlops/evaluates -->
+
+    <owl:ObjectProperty rdf:about="http://www.fates-mlops/evaluates">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.fates-mlops/impactsNegatively -->
+
+    <owl:ObjectProperty rdf:about="http://www.fates-mlops/impactsNegatively">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.fates-mlops/Element"/>
+        <rdfs:range rdf:resource="http://www.fates-mlops/Domain"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.fates-mlops/impactsPositively -->
+
+    <owl:ObjectProperty rdf:about="http://www.fates-mlops/impactsPositively">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.fates-mlops/isMeasuredBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.fates-mlops/isMeasuredBy">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.fates-mlops/refines -->
+
+    <owl:ObjectProperty rdf:about="http://www.fates-mlops/refines">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.fates-mlops/Element"/>
+        <rdfs:range rdf:resource="http://www.fates-mlops/Element"/>
+        <rdfs:comment>Indicates that one Element refines, specializes, or operationalizes another Element.</rdfs:comment>
+        <rdfs:label>refines</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.fates-mlops/validFor -->
+
+    <owl:ObjectProperty rdf:about="http://www.fates-mlops/validFor">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.fates-mlops/Criteria -->
+
+    <owl:Class rdf:about="http://www.fates-mlops/Criteria">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.fates-mlops/evaluates"/>
+                        <owl:someValuesFrom rdf:resource="http://www.fates-mlops/Element"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.fates-mlops/isMeasuredBy"/>
+                        <owl:someValuesFrom rdf:resource="http://www.fates-mlops/Metric"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.fates-mlops/validFor"/>
+                        <owl:someValuesFrom rdf:resource="http://www.fates-mlops/Task"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.fates-mlops/Domain -->
+
+    <owl:Class rdf:about="http://www.fates-mlops/Domain"/>
+    
+
+
+    <!-- http://www.fates-mlops/Element -->
+
+    <owl:Class rdf:about="http://www.fates-mlops/Element">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.fates-mlops/impactsNegatively"/>
+                        <owl:someValuesFrom rdf:resource="http://www.fates-mlops/Domain"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.fates-mlops/impactsPositively"/>
+                        <owl:someValuesFrom rdf:resource="http://www.fates-mlops/Domain"/>
+                    </owl:Restriction>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.fates-mlops/Metric -->
+
+    <owl:Class rdf:about="http://www.fates-mlops/Metric"/>
+    
+
+
+    <!-- http://www.fates-mlops/Task -->
+
+    <owl:Class rdf:about="http://www.fates-mlops/Task"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- http://www.fates-mlops/AlgorithmicBias -->
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/AlgorithmicBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:refines rdf:resource="http://www.fates-mlops/bias"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.fates-mlops/AutomationBias -->
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/AutomationBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:refines rdf:resource="http://www.fates-mlops/bias"/>
+    </owl:NamedIndividual>
+    
+    
+
+
+    <!-- http://www.fates-mlops/DisparateImpact -->
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/DisparateImpact">
+        <rdf:type rdf:resource="http://www.fates-mlops/Metric"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.fates-mlops/ExclusionBias -->
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/ExclusionBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:refines rdf:resource="http://www.fates-mlops/bias"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.fates-mlops/MeasurementBias -->
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/MeasurementBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:refines rdf:resource="http://www.fates-mlops/bias"/>
+    </owl:NamedIndividual>
+    
+    
+
+
+    <!-- http://www.fates-mlops/PrejudiceBias -->
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/PrejudiceBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:refines rdf:resource="http://www.fates-mlops/bias"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.fates-mlops/SampleBias -->
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/SampleBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:refines rdf:resource="http://www.fates-mlops/bias"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.fates-mlops/SelectionBias -->
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/SelectionBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:refines rdf:resource="http://www.fates-mlops/bias"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.fates-mlops/bias -->
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/bias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:impactsNegatively rdf:resource="http://www.fates-mlops/fairness"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.fates-mlops/classification -->
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/classification">
+        <rdf:type rdf:resource="http://www.fates-mlops/Task"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.fates-mlops/demographic_parity -->
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/demographic_parity">
+        <rdf:type rdf:resource="http://www.fates-mlops/Metric"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.fates-mlops/fairness -->
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/fairness">
+        <rdf:type rdf:resource="http://www.fates-mlops/Domain"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.fates-mlops/generation -->
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/generation">
+        <rdf:type rdf:resource="http://www.fates-mlops/Task"/>
+    </owl:NamedIndividual>
+    
+</rdf:RDF>
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
