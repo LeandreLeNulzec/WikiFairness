@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>FATES Ontology Browser</h1>
+<p>Automatically generated semantic wiki.</p>
+
+<section>
+  <h2>Classes</h2>
+  <ul>
+    {% for c in classes %}
+    <li><a href="entities/{{ c['file'] }}">{{ c['label'] }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section>
+  <h2>Properties</h2>
+  <ul>
+    {% for p in properties %}
+    <li><a href="entities/{{ p['file'] }}">{{ p['label'] }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section>
+  <h2>Individuals</h2>
+  <ul>
+    {% for i in individuals %}
+    <li><a href="entities/{{ i['file'] }}">{{ i['label'] }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

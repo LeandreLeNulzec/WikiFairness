@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ label }}</h1>
+<p class="uri">{{ uri }}</p>
+<p class="comment">{{ comment }}</p>
+
+{% if types %}
+<h2>Type(s)</h2>
+<ul>
+  {% for t in types %}
+  <li>{% if "#" not in t %}<a href="{{ t }}.html">{{ t }}</a>{%else%} {{t}} {%endif%}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% if relations %}
+<h2>Relations</h2>
+<ul>
+  {% for pred, obj in relations %}
+  <li> {% if "#" not in pred %}<a href="{{ pred }}.html">{{ pred }}</a> {%else%} {{pred}} {%endif%} → {% if "#" not in obj %}<a href="{{ obj }}.html">{{ obj }}</a>{%else%} {{obj}} {%endif%}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% if anti_rels %}
+<h2>Relations inverses</h2>
+<ul>
+  {% for pred, obj in anti_rels %}
+  <li> {% if "#" not in pred %}<a href="{{ pred }}.html">{{ pred }}</a> {%else%} {{pred}} {%endif%} → {% if "#" not in obj %}<a href="{{ obj }}.html">{{ obj }}</a>{%else%} {{obj}} {%endif%}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
