@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title></title>
-  <link rel="stylesheet" href="../static/style.css">
+  <link rel="stylesheet" href="static/style.css">
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
 <style>
@@ -11,10 +11,17 @@
     .mermaid {
         text-align: center;
         background: var(--bg-main);
-        padding: 2rem;
+        padding: 3rem;
         border-radius: 8px;
         border: 1px solid var(--border);
-        min-height: 300px;
+        min-height: 400px;
+        overflow: visible !important;
+    }
+    
+    .mermaid svg {
+        max-width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
     }
     
     /* Enhance Mermaid nodes for orange theme */
@@ -39,13 +46,18 @@
         fill: #fff9f5 !important;
         stroke: var(--accent) !important;
     }
+    
+    /* Fix for cropped nodes */
+    .graph-container {
+        overflow: visible !important;
+    }
 </style>
 
 </head>
 <body>
   <nav>
-    <a href="../index.html">🏠 Home</a>
-    <a href="../visualizations.html">📊 Visualizations</a>
+    <a href="index.html">🏠 Home</a>
+    <a href="visualizations.html">📊 Visualizations</a>
   </nav>
   <main>
     
@@ -57,6 +69,7 @@
     <div class="mermaid">
 graph TD
     Thing["owl:Thing"]
+    %%{init: {"flowchart": {"padding": 20, "nodeSpacing": 80, "rankSpacing": 80}}}%%
     Thing --> Element["Element"]
     Thing --> Domain["Domain"]
     Thing --> Criteria["Criteria"]
@@ -67,8 +80,8 @@ graph TD
     click Criteria "entities/Criteria.html" "Go to Criteria"
     click Metric "entities/Metric.html" "Go to Metric"
     click Task "entities/Task.html" "Go to Task"
-    classDef classNode fill:#3498db,stroke:#2980b9,stroke-width:2px,color:#fff
-    classDef rootNode fill:#95a5a6,stroke:#7f8c8d,stroke-width:2px,color:#fff
+    classDef classNode fill:#ff6b35,stroke:#e55a2b,stroke-width:2px,color:#fff
+    classDef rootNode fill:#f7931e,stroke:#e55a2b,stroke-width:2px,color:#fff
     class Thing rootNode
     class Element,Domain,Criteria,Metric,Task classNode
     </div>
@@ -89,6 +102,7 @@ erDiagram
     <p>Shows relationships between individuals (limited to first 10 for readability).</p>
     <div class="mermaid">
 graph LR
+    %%{init: {"flowchart": {"padding": 20, "nodeSpacing": 100, "rankSpacing": 100}}}%%
     AlgorithmicBias["AlgorithmicBias<br/><i>:Element</i>"]
     bias["bias<br/><i>:Element</i>"]
     AutomationBias["AutomationBias<br/><i>:Element</i>"]
@@ -117,7 +131,7 @@ graph LR
     click SampleBias "entities/SampleBias.html" "View SampleBias"
     click SelectionBias "entities/SelectionBias.html" "View SelectionBias"
     click fairness "entities/fairness.html" "View fairness"
-    classDef instanceNode fill:#e74c3c,stroke:#c0392b,stroke-width:2px,color:#fff
+    classDef instanceNode fill:#ff6b35,stroke:#e55a2b,stroke-width:2px,color:#fff
     class AlgorithmicBias,bias,AutomationBias,DisparateImpact,ExclusionBias,MeasurementBias,PrejudiceBias,SampleBias,SelectionBias,fairness instanceNode
     </div>
 </div>
