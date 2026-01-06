@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+{% set base_path = "../" %}
 {% block content %}
 <h1>{{ label }}</h1>
 <p class="uri">{{ uri }}</p>
+{% if comment %}
 <p class="comment">{{ comment }}</p>
-
+{% endif %}
+<p></p>
 {% if types %}
 <h2>Type(s)</h2>
 <ul>

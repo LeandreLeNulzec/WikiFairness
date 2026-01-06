@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="static/style.css">
+    
+<script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+
+<style>
+    /* --- Layout & Containers --- */
+    .graph-container {
+        margin-bottom: 3rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    .graph-header {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-bottom: 1px solid #ddd;
+    }
+    .graph-header h2 { margin: 0; font-size: 1.25rem; color: #333; }
+    .graph-header p { margin: 5px 0 0; color: #666; font-size: 0.9rem; }
+
+    /* Fixed height wrapper for the zoom window */
+    .mermaid-wrapper {
+        width: 100%;
+        height: 600px; 
+        background-color: #ffffff;
+        position: relative;
+        overflow: hidden; 
+    }
+    
+    .mermaid {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* =========================================
+       CSS OVERRIDES FOR MERMAID
+       ========================================= */
+
+    /* --- 1. Lines & Arrows (GRAY) --- */
+    /* Target StateDiagram Lines */
+    .mermaid .transition {
+        stroke: #666 !important;
+        stroke-width: 1.5px !important;
+        fill: none !important;
+    }
+    /* Target Flowchart Lines (Class/Instance graphs) */
+    .mermaid .edgePath path {
+        stroke: #666 !important;
+        stroke-width: 1.5px !important;
+    }
+
+    /* --- 2. Arrowheads (GRAY FILL) --- */
+    /* Universal selector for arrow markers */
+    .mermaid marker path, 
+    .mermaid #arrowhead path {
+        fill: #666 !important;
+        stroke: #666 !important;
+    }
+
+    /* --- 3. Relationship Labels (NO BOXES) --- */
+    /* Removes the orange border and sets background to white */
+    /* --- 2. Label Backgrounds (OPAQUE WHITE) --- */
+    
+    /* This styling now specifically targets Flowchart labels */
+    .mermaid .edgeLabel {
+        background-color: white !important;
+        opacity: 1 !important;
+        color: #333 !important;
+        padding: 4px !important;
+        border-radius: 4px !important;
+    }
+
+    /* Ensure the text container inside is also white */
+    .mermaid .edgeLabel rect {
+        fill: #ffffff !important;
+        opacity: 1 !important;
+    }
+    
+    /* If Mermaid uses HTML labels (which we enabled), target the span/p */
+    .mermaid .edgeLabel p, 
+    .mermaid .edgeLabel span,
+    .mermaid .edgeLabel div {
+        background-color: white !important;
+        color: #333 !important;
+    }
+
+    /* --- 4. Nodes (ORANGE) --- */
+    /* StateDiagram Nodes */
+    g.state > rect, rect.box {
+        fill: #ff6b35 !important;
+        stroke: #e55a2b !important;
+    }
+    /* Flowchart Nodes */
+    .node rect, .node polygon, .node circle {
+        fill: #ff6b35 !important;
+        stroke: #e55a2b !important;
+    }
+
+    /* --- 5. Node Text (WHITE) --- */
+    g.state text, g.nodeLabel, .node text {
+        fill: white !important;
+        font-weight: bold !important;
+        font-family: sans-serif;
+    }
+
+    /* --- 6. Clusters (For Instance Network) --- */
+    .cluster rect {
+        fill: #fff9f5 !important;
+        stroke: #ff6b35 !important;
+        stroke-width: 1px !important;
+    }
+    .cluster text {
+        fill: #333 !important;
+    }
+
+    /* SVG Sizing Fix */
+    svg {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+    }
+</style>
+
+</head>
+<body>
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="visualizations.html">📊 Visualizations</a>
+  </nav>
+  <main>
+    
+<h1>🔗 Ontology Visualizations</h1>
+
+<div class="graph-container">
+    <div class="graph-header">
+        <h2>📊 Class Hierarchy</h2>
+        <p>Taxonomy of classes. Use mouse wheel to zoom.</p>
+    </div>
+    <div class="mermaid-wrapper">
+        <div class="mermaid">
+graph TD
+    %%{init: {"flowchart": {"padding": 20, "nodeSpacing": 50, "rankSpacing": 50}}}%%
+    classDef classNode fill:#ff6b35,stroke:#e55a2b,stroke-width:2px,color:#fff
+    classDef rootNode fill:#f7931e,stroke:#e55a2b,stroke-width:2px,color:#fff
+    Thing["owl:Thing"]:::rootNode
+    Criteria["Criteria"]:::classNode
+    click Criteria "entities/Criteria.html" "Go to Criteria"
+    Thing --> Criteria
+    Element["Element"]:::classNode
+    click Element "entities/Element.html" "Go to Element"
+    Thing --> Element
+    Domain["Domain"]:::classNode
+    click Domain "entities/Domain.html" "Go to Domain"
+    Thing --> Domain
+    Metric["Metric"]:::classNode
+    click Metric "entities/Metric.html" "Go to Metric"
+    Thing --> Metric
+    Task["Task"]:::classNode
+    click Task "entities/Task.html" "Go to Task"
+    Thing --> Task
+        </div>
+    </div>
+</div>
+
+<div class="graph-container">
+    <div class="graph-header">
+        <h2>🔗 Property Relationships</h2>
+        <p>Overview of how concepts are connected.</p>
+    </div>
+    <div class="mermaid-wrapper">
+        <div class="mermaid">
+graph BT
+    %%{init: {"flowchart": {"nodeSpacing": 80, "rankSpacing": 100}}}%%
+    classDef classNode fill:#ff6b35,stroke:#e55a2b,stroke-width:2px,color:#fff,font-weight:bold
+    Criteria -- "Evaluates" --> Element
+    Element -- "ImpactsNegatively" --> Domain
+    Element -- "ImpactsPositively" --> Domain
+    Criteria -- "IsMeasuredBy" --> Metric
+    Element -- "Refines" --> Element
+    Criteria -- "ValidFor" --> Task
+    Element["Element"]:::classNode
+    click Element "entities/Element.html"
+    Criteria["Criteria"]:::classNode
+    click Criteria "entities/Criteria.html"
+    Task["Task"]:::classNode
+    click Task "entities/Task.html"
+    Metric["Metric"]:::classNode
+    click Metric "entities/Metric.html"
+    Domain["Domain"]:::classNode
+    click Domain "entities/Domain.html"
+        </div>
+    </div>
+</div>
+
+<div class="graph-container">
+    <div class="graph-header">
+        <h2>🌐 Instance Network</h2>
+        <p>Individual instances clustered by type.</p>
+    </div>
+    <div class="mermaid-wrapper">
+        <div class="mermaid">
+graph LR
+    %%{init: {"flowchart": {"nodeSpacing": 60, "rankSpacing": 120, "curve": "basis"}}}%%
+    classDef instanceNode fill:#ff6b35,stroke:#e55a2b,stroke-width:2px,color:#fff
+    classDef clusterLabel fill:#fff9f5,stroke:#f7931e,stroke-width:1px,color:#2d2d2d
+    subgraph Criteria ["Criteria"]
+    direction TB
+        Clarity["Clarity"]:::instanceNode
+        click Clarity "entities/Clarity.html"
+        Completeness["Completeness"]:::instanceNode
+        click Completeness "entities/Completeness.html"
+        Complexity["Complexity"]:::instanceNode
+        click Complexity "entities/Complexity.html"
+        ConditionalStatisticalParity["ConditionalStatisticalParity"]:::instanceNode
+        click ConditionalStatisticalParity "entities/ConditionalStatisticalParity.html"
+        CounterfactualFairness["CounterfactualFairness"]:::instanceNode
+        click CounterfactualFairness "entities/CounterfactualFairness.html"
+        DemographicParity["DemographicParity"]:::instanceNode
+        click DemographicParity "entities/DemographicParity.html"
+        EqualOpportunity["EqualOpportunity"]:::instanceNode
+        click EqualOpportunity "entities/EqualOpportunity.html"
+        EqualizedOdds["EqualizedOdds"]:::instanceNode
+        click EqualizedOdds "entities/EqualizedOdds.html"
+        Faithfulness["Faithfulness"]:::instanceNode
+        click Faithfulness "entities/Faithfulness.html"
+        Fidelity["Fidelity"]:::instanceNode
+        click Fidelity "entities/Fidelity.html"
+        Interpretability["Interpretability"]:::instanceNode
+        click Interpretability "entities/Interpretability.html"
+        Monotonicity["Monotonicity"]:::instanceNode
+        click Monotonicity "entities/Monotonicity.html"
+        NeutralityInStereotypes["NeutralityInStereotypes"]:::instanceNode
+        click NeutralityInStereotypes "entities/NeutralityInStereotypes.html"
+        Parsimony["Parsimony"]:::instanceNode
+        click Parsimony "entities/Parsimony.html"
+        Robustness["Robustness"]:::instanceNode
+        click Robustness "entities/Robustness.html"
+        Soundness["Soundness"]:::instanceNode
+        click Soundness "entities/Soundness.html"
+        Stability["Stability"]:::instanceNode
+        click Stability "entities/Stability.html"
+        TreatmentEquality["TreatmentEquality"]:::instanceNode
+        click TreatmentEquality "entities/TreatmentEquality.html"
+    end
+    subgraph Element ["Element"]
+    direction TB
+        AlgorithmicBias["AlgorithmicBias"]:::instanceNode
+        click AlgorithmicBias "entities/AlgorithmicBias.html"
+        Alignment["Alignment"]:::instanceNode
+        click Alignment "entities/Alignment.html"
+        Answerability["Answerability"]:::instanceNode
+        click Answerability "entities/Answerability.html"
+        AutomationBias["AutomationBias"]:::instanceNode
+        click AutomationBias "entities/AutomationBias.html"
+        Bias["Bias"]:::instanceNode
+        click Bias "entities/Bias.html"
+        Defense["Defense"]:::instanceNode
+        click Defense "entities/Defense.html"
+        Discrimination["Discrimination"]:::instanceNode
+        click Discrimination "entities/Discrimination.html"
+        Documentation["Documentation"]:::instanceNode
+        click Documentation "entities/Documentation.html"
+        ExclusionBias["ExclusionBias"]:::instanceNode
+        click ExclusionBias "entities/ExclusionBias.html"
+        ExplainableAI["ExplainableAI"]:::instanceNode
+        click ExplainableAI "entities/ExplainableAI.html"
+        MeasurementBias["MeasurementBias"]:::instanceNode
+        click MeasurementBias "entities/MeasurementBias.html"
+        Morality["Morality"]:::instanceNode
+        click Morality "entities/Morality.html"
+        PrejudiceBias["PrejudiceBias"]:::instanceNode
+        click PrejudiceBias "entities/PrejudiceBias.html"
+        Privacy["Privacy"]:::instanceNode
+        click Privacy "entities/Privacy.html"
+        SampleBias["SampleBias"]:::instanceNode
+        click SampleBias "entities/SampleBias.html"
+        SelectionBias["SelectionBias"]:::instanceNode
+        click SelectionBias "entities/SelectionBias.html"
+        Traceability["Traceability"]:::instanceNode
+        click Traceability "entities/Traceability.html"
+    end
+    subgraph Task ["Task"]
+    direction TB
+        Classification["Classification"]:::instanceNode
+        click Classification "entities/Classification.html"
+        Language["Language"]:::instanceNode
+        click Language "entities/Language.html"
+    end
+    subgraph Domain ["Domain"]
+    direction TB
+        Accountability["Accountability"]:::instanceNode
+        click Accountability "entities/Accountability.html"
+        Ethics["Ethics"]:::instanceNode
+        click Ethics "entities/Ethics.html"
+        Fairness["Fairness"]:::instanceNode
+        click Fairness "entities/Fairness.html"
+        Safety["Safety"]:::instanceNode
+        click Safety "entities/Safety.html"
+        Security["Security"]:::instanceNode
+        click Security "entities/Security.html"
+        Transparency["Transparency"]:::instanceNode
+        click Transparency "entities/Transparency.html"
+    end
+    subgraph Metric ["Metric"]
+    direction TB
+        CounterfactualDisparity["CounterfactualDisparity"]:::instanceNode
+        click CounterfactualDisparity "entities/CounterfactualDisparity.html"
+        CrowSPairsScore["CrowSPairsScore"]:::instanceNode
+        click CrowSPairsScore "entities/CrowSPairsScore.html"
+        DemographicParityDifference["DemographicParityDifference"]:::instanceNode
+        click DemographicParityDifference "entities/DemographicParityDifference.html"
+        DisparateImpact["DisparateImpact"]:::instanceNode
+        click DisparateImpact "entities/DisparateImpact.html"
+        EqualOpportunityDifference["EqualOpportunityDifference"]:::instanceNode
+        click EqualOpportunityDifference "entities/EqualOpportunityDifference.html"
+        EqualOpportunityRatio["EqualOpportunityRatio"]:::instanceNode
+        click EqualOpportunityRatio "entities/EqualOpportunityRatio.html"
+        EqualizedOddsDifference["EqualizedOddsDifference"]:::instanceNode
+        click EqualizedOddsDifference "entities/EqualizedOddsDifference.html"
+        EqualizedOddsRatio["EqualizedOddsRatio"]:::instanceNode
+        click EqualizedOddsRatio "entities/EqualizedOddsRatio.html"
+        FidelityScore["FidelityScore"]:::instanceNode
+        click FidelityScore "entities/FidelityScore.html"
+        TreatmentEqualityDifference["TreatmentEqualityDifference"]:::instanceNode
+        click TreatmentEqualityDifference "entities/TreatmentEqualityDifference.html"
+    end
+    AlgorithmicBias -- "Refines" --> Bias
+    Alignment -- "ImpactsPositively" --> Safety
+    Answerability -- "ImpactsPositively" --> Accountability
+    AutomationBias -- "Refines" --> Bias
+    Bias -- "ImpactsNegatively" --> Ethics
+    Bias -- "ImpactsNegatively" --> Fairness
+    Clarity -- "Evaluates" --> ExplainableAI
+    Completeness -- "Evaluates" --> ExplainableAI
+    Complexity -- "Evaluates" --> ExplainableAI
+    ConditionalStatisticalParity -- "ValidFor" --> Classification
+    CounterfactualFairness -- "IsMeasuredBy" --> CounterfactualDisparity
+    CounterfactualFairness -- "ValidFor" --> Classification
+    Defense -- "ImpactsPositively" --> Security
+    DemographicParity -- "IsMeasuredBy" --> DemographicParityDifference
+    DemographicParity -- "IsMeasuredBy" --> DisparateImpact
+    DemographicParity -- "ValidFor" --> Classification
+    Discrimination -- "ImpactsNegatively" --> Ethics
+    Discrimination -- "ImpactsNegatively" --> Fairness
+    Discrimination -- "Refines" --> Bias
+    Documentation -- "ImpactsPositively" --> Transparency
+    EqualOpportunity -- "IsMeasuredBy" --> EqualOpportunityDifference
+    EqualOpportunity -- "IsMeasuredBy" --> EqualOpportunityRatio
+    EqualOpportunity -- "ValidFor" --> Classification
+    EqualizedOdds -- "IsMeasuredBy" --> EqualizedOddsDifference
+    EqualizedOdds -- "IsMeasuredBy" --> EqualizedOddsRatio
+    EqualizedOdds -- "ValidFor" --> Classification
+    ExclusionBias -- "Refines" --> Bias
+    ExplainableAI -- "ImpactsPositively" --> Accountability
+    ExplainableAI -- "ImpactsPositively" --> Fairness
+    ExplainableAI -- "ImpactsPositively" --> Transparency
+    Faithfulness -- "Evaluates" --> ExplainableAI
+    Fidelity -- "Evaluates" --> ExplainableAI
+    Fidelity -- "IsMeasuredBy" --> FidelityScore
+    Interpretability -- "Evaluates" --> ExplainableAI
+    MeasurementBias -- "Refines" --> Bias
+    Monotonicity -- "Evaluates" --> ExplainableAI
+    Morality -- "ImpactsPositively" --> Ethics
+    NeutralityInStereotypes -- "IsMeasuredBy" --> CrowSPairsScore
+    NeutralityInStereotypes -- "ValidFor" --> Language
+    Parsimony -- "Evaluates" --> ExplainableAI
+    PrejudiceBias -- "Refines" --> Bias
+    Privacy -- "ImpactsPositively" --> Ethics
+    Privacy -- "ImpactsPositively" --> Safety
+    Privacy -- "ImpactsPositively" --> Security
+    Robustness -- "Evaluates" --> ExplainableAI
+    SampleBias -- "Refines" --> Bias
+    SelectionBias -- "Refines" --> Bias
+    Soundness -- "Evaluates" --> ExplainableAI
+    Stability -- "Evaluates" --> ExplainableAI
+    Traceability -- "ImpactsPositively" --> Accountability
+    Traceability -- "ImpactsPositively" --> Transparency
+    TreatmentEquality -- "IsMeasuredBy" --> TreatmentEqualityDifference
+    TreatmentEquality -- "ValidFor" --> Classification
+    linkStyle 0 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 1 stroke:#28a745,stroke-width:2px;
+    linkStyle 2 stroke:#28a745,stroke-width:2px;
+    linkStyle 3 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 4 stroke:#dc3545,stroke-width:2px;
+    linkStyle 5 stroke:#dc3545,stroke-width:2px;
+    linkStyle 6 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 7 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 8 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 9 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+    linkStyle 10 stroke:#20c997,stroke-width:2px;
+    linkStyle 11 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+    linkStyle 12 stroke:#28a745,stroke-width:2px;
+    linkStyle 13 stroke:#20c997,stroke-width:2px;
+    linkStyle 14 stroke:#20c997,stroke-width:2px;
+    linkStyle 15 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+    linkStyle 16 stroke:#dc3545,stroke-width:2px;
+    linkStyle 17 stroke:#dc3545,stroke-width:2px;
+    linkStyle 18 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 19 stroke:#28a745,stroke-width:2px;
+    linkStyle 20 stroke:#20c997,stroke-width:2px;
+    linkStyle 21 stroke:#20c997,stroke-width:2px;
+    linkStyle 22 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+    linkStyle 23 stroke:#20c997,stroke-width:2px;
+    linkStyle 24 stroke:#20c997,stroke-width:2px;
+    linkStyle 25 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+    linkStyle 26 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 27 stroke:#28a745,stroke-width:2px;
+    linkStyle 28 stroke:#28a745,stroke-width:2px;
+    linkStyle 29 stroke:#28a745,stroke-width:2px;
+    linkStyle 30 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 31 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 32 stroke:#20c997,stroke-width:2px;
+    linkStyle 33 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 34 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 35 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 36 stroke:#28a745,stroke-width:2px;
+    linkStyle 37 stroke:#20c997,stroke-width:2px;
+    linkStyle 38 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+    linkStyle 39 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 40 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 41 stroke:#28a745,stroke-width:2px;
+    linkStyle 42 stroke:#28a745,stroke-width:2px;
+    linkStyle 43 stroke:#28a745,stroke-width:2px;
+    linkStyle 44 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 45 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 46 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 47 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 48 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 49 stroke:#28a745,stroke-width:2px;
+    linkStyle 50 stroke:#28a745,stroke-width:2px;
+    linkStyle 51 stroke:#20c997,stroke-width:2px;
+    linkStyle 52 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+        </div>
+    </div>
+</div>
+
+  </main>
+  
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    // 1. Configure Mermaid
+    mermaid.initialize({ 
+        startOnLoad: false, 
+        theme: 'base',
+        securityLevel: 'loose',
+        // Define theme variables as a fallback
+        themeVariables: {
+            primaryColor: '#ff6b35',
+            lineColor: '#666666',
+            fontFamily: 'sans-serif'
+        }
+    });
+
+    // 2. Render and Attach Zoom
+    await mermaid.run({
+        querySelector: '.mermaid',
+        postRenderCallback: (id) => {
+            const div = document.getElementById(id);
+            // Locate the SVG (Mermaid might replace the div or append to it)
+            const svg = div.tagName === 'svg' ? div : div.querySelector('svg');
+
+            if (svg) {
+                // Ensure SVG fits the container
+                svg.style.width = '100%';
+                svg.style.height = '100%';
+                
+                // Initialize Pan-Zoom
+                svgPanZoom(svg, {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,
+                    minZoom: 0.1,
+                    maxZoom: 10
+                });
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

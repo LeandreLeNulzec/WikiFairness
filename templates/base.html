@@ -2,15 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>{{ title }}</title>
-  <link rel="stylesheet" href="../static/style.css">
+  <title>{% block title %}{{title}}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ base_path }}static/style.css">
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
   <nav>
-    <a href="../index.html">🏠 Home</a>
+    <a href="{{ base_path }}index.html">🏠 Home</a>
+    <a href="{{ base_path }}visualizations.html">📊 Visualizations</a>
   </nav>
   <main>
     {% block content %}{% endblock %}
   </main>
+  {% block extra_scripts %}{% endblock %}
 </body>
 </html>
