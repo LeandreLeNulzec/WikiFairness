@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="static/style.css">
+    
+<script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+
+<style>
+    /* --- Layout & Containers --- */
+    .graph-container {
+        margin-bottom: 3rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    .graph-header {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-bottom: 1px solid #ddd;
+    }
+    .graph-header h2 { margin: 0; font-size: 1.25rem; color: #333; }
+    .graph-header p { margin: 5px 0 0; color: #666; font-size: 0.9rem; }
+
+    /* Fixed height wrapper for the zoom window */
+    .mermaid-wrapper {
+        width: 100%;
+        height: 600px; 
+        background-color: #ffffff;
+        position: relative;
+        overflow: hidden; 
+    }
+    
+    .mermaid {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* =========================================
+       CSS OVERRIDES FOR MERMAID
+       ========================================= */
+
+    /* --- 1. Lines & Arrows (GRAY) --- */
+    /* Target StateDiagram Lines */
+    .mermaid .transition {
+        stroke: #666 !important;
+        stroke-width: 1.5px !important;
+        fill: none !important;
+    }
+    /* Target Flowchart Lines (Class/Instance graphs) */
+    .mermaid .edgePath path {
+        stroke: #666 !important;
+        stroke-width: 1.5px !important;
+    }
+
+    /* --- 2. Arrowheads (GRAY FILL) --- */
+    /* Universal selector for arrow markers */
+    .mermaid marker path, 
+    .mermaid #arrowhead path {
+        fill: #666 !important;
+        stroke: #666 !important;
+    }
+
+    /* --- 3. Relationship Labels (NO BOXES) --- */
+    /* Removes the orange border and sets background to white */
+    /* --- 2. Label Backgrounds (OPAQUE WHITE) --- */
+    
+    /* This styling now specifically targets Flowchart labels */
+    .mermaid .edgeLabel {
+        background-color: white !important;
+        opacity: 1 !important;
+        color: #333 !important;
+        padding: 4px !important;
+        border-radius: 4px !important;
+    }
+
+    /* Ensure the text container inside is also white */
+    .mermaid .edgeLabel rect {
+        fill: #ffffff !important;
+        opacity: 1 !important;
+    }
+    
+    /* If Mermaid uses HTML labels (which we enabled), target the span/p */
+    .mermaid .edgeLabel p, 
+    .mermaid .edgeLabel span,
+    .mermaid .edgeLabel div {
+        background-color: white !important;
+        color: #333 !important;
+    }
+
+    /* --- 4. Nodes (ORANGE) --- */
+    /* StateDiagram Nodes */
+    g.state > rect, rect.box {
+        fill: #ff6b35 !important;
+        stroke: #e55a2b !important;
+    }
+    /* Flowchart Nodes */
+    .node rect, .node polygon, .node circle {
+        fill: #ff6b35 !important;
+        stroke: #e55a2b !important;
+    }
+
+    /* --- 5. Node Text (WHITE) --- */
+    g.state text, g.nodeLabel, .node text {
+        fill: white !important;
+        font-weight: bold !important;
+        font-family: sans-serif;
+    }
+
+    /* --- 6. Clusters (For Instance Network) --- */
+    .cluster rect {
+        fill: #fff9f5 !important;
+        stroke: #ff6b35 !important;
+        stroke-width: 1px !important;
+    }
+    .cluster text {
+        fill: #333 !important;
+    }
+
+    /* SVG Sizing Fix */
+    svg {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+    }
+</style>
+
+</head>
+<body>
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="visualizations.html">📊 Visualizations</a>
+    <a href="network.html">🕸️ Instance Network</a> </nav>
+  </nav>
+  <main>
+    
+<h1>🔗 Ontology Visualizations</h1>
+
+<div class="graph-container">
+    <div class="graph-header">
+        <h2>📊 Class Hierarchy</h2>
+        <p>Taxonomy of classes. Use mouse wheel to zoom.</p>
+    </div>
+    <div class="mermaid-wrapper">
+        <div class="mermaid">
+graph TD
+    %%{init: {"flowchart": {"padding": 20, "nodeSpacing": 50, "rankSpacing": 50}}}%%
+    classDef classNode fill:#ff6b35,stroke:#e55a2b,stroke-width:2px,color:#fff
+    classDef rootNode fill:#f7931e,stroke:#e55a2b,stroke-width:2px,color:#fff
+    Thing["owl:Thing"]:::rootNode
+    Criteria["Criteria"]:::classNode
+    click Criteria "entities/Criteria.html" "Go to Criteria"
+    Thing --> Criteria
+    Element["Element"]:::classNode
+    click Element "entities/Element.html" "Go to Element"
+    Thing --> Element
+    Domain["Domain"]:::classNode
+    click Domain "entities/Domain.html" "Go to Domain"
+    Thing --> Domain
+    Metric["Metric"]:::classNode
+    click Metric "entities/Metric.html" "Go to Metric"
+    Thing --> Metric
+    Task["Task"]:::classNode
+    click Task "entities/Task.html" "Go to Task"
+    Thing --> Task
+        </div>
+    </div>
+</div>
+
+<div class="graph-container">
+    <div class="graph-header">
+        <h2>🔗 Property Relationships</h2>
+        <p>Overview of how concepts are connected.</p>
+    </div>
+    <div class="mermaid-wrapper">
+        <div class="mermaid">
+graph BT
+    %%{init: {"flowchart": {"nodeSpacing": 80, "rankSpacing": 100}}}%%
+    classDef classNode fill:#ff6b35,stroke:#e55a2b,stroke-width:2px,color:#fff,font-weight:bold
+    Criteria -- "Evaluates" --> Element
+    Element -- "ImpactsNegatively" --> Domain
+    Element -- "ImpactsPositively" --> Domain
+    Criteria -- "IsMeasuredBy" --> Metric
+    Element -- "Refines" --> Element
+    Criteria -- "ValidFor" --> Task
+    Element["Element"]:::classNode
+    click Element "entities/Element.html"
+    Task["Task"]:::classNode
+    click Task "entities/Task.html"
+    Criteria["Criteria"]:::classNode
+    click Criteria "entities/Criteria.html"
+    Metric["Metric"]:::classNode
+    click Metric "entities/Metric.html"
+    Domain["Domain"]:::classNode
+    click Domain "entities/Domain.html"
+        </div>
+    </div>
+</div>
+
+
+  </main>
+  
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    // 1. Configure Mermaid
+    mermaid.initialize({ 
+        startOnLoad: false, 
+        theme: 'base',
+        securityLevel: 'loose',
+        // Define theme variables as a fallback
+        themeVariables: {
+            primaryColor: '#ff6b35',
+            lineColor: '#666666',
+            fontFamily: 'sans-serif'
+        }
+    });
+
+    // 2. Render and Attach Zoom
+    await mermaid.run({
+        querySelector: '.mermaid',
+        postRenderCallback: (id) => {
+            const div = document.getElementById(id);
+            // Locate the SVG (Mermaid might replace the div or append to it)
+            const svg = div.tagName === 'svg' ? div : div.querySelector('svg');
+
+            if (svg) {
+                // Ensure SVG fits the container
+                svg.style.width = '100%';
+                svg.style.height = '100%';
+                
+                // Initialize Pan-Zoom
+                svgPanZoom(svg, {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,
+                    minZoom: 0.1,
+                    maxZoom: 10
+                });
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

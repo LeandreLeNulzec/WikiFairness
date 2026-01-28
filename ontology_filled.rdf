@@ -1,0 +1,466 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.fates-mlops/"
+     xml:base="http://www.fates-mlops/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:fates-mlops="http://www.fates-mlops/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+    <owl:Ontology rdf:about="http://www.fates-mlops/">
+    <dc:title xml:lang="en">FATES-MLOPS Ontology</dc:title>
+    <rdfs:label xml:lang="en">FATES-MLOPS Ontology</rdfs:label>
+    </owl:Ontology>
+    
+
+    <owl:ObjectProperty rdf:about="http://www.fates-mlops/Evaluates">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:range rdf:resource="http://www.fates-mlops/Element"/>
+    </owl:ObjectProperty>
+    
+
+    <owl:ObjectProperty rdf:about="http://www.fates-mlops/ImpactsNegatively">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.fates-mlops/Element"/>
+        <rdfs:range rdf:resource="http://www.fates-mlops/Domain"/>
+    </owl:ObjectProperty>
+    
+
+    <owl:ObjectProperty rdf:about="http://www.fates-mlops/ImpactsPositively">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.fates-mlops/Element"/>
+        <rdfs:range rdf:resource="http://www.fates-mlops/Domain"/>
+    </owl:ObjectProperty>
+    
+
+    <owl:ObjectProperty rdf:about="http://www.fates-mlops/IsMeasuredBy">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+                <rdfs:domain rdf:resource="http://www.fates-mlops/Criteria"/>
+                <rdfs:range rdf:resource="http://www.fates-mlops/Metric"/>
+    </owl:ObjectProperty>
+    
+
+    <owl:ObjectProperty rdf:about="http://www.fates-mlops/Refines">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.fates-mlops/Element"/>
+        <rdfs:range rdf:resource="http://www.fates-mlops/Element"/>
+        <rdfs:comment>Indicates that one Element refines, specializes, or operationalizes another Element.</rdfs:comment>
+        <rdfs:label>Refines</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+    <owl:ObjectProperty rdf:about="http://www.fates-mlops/ValidFor">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:range rdf:resource="http://www.fates-mlops/Task"/>
+    </owl:ObjectProperty>
+    
+
+    <owl:Class rdf:about="http://www.fates-mlops/Criteria">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.fates-mlops/Evaluates"/>
+                        <owl:someValuesFrom rdf:resource="http://www.fates-mlops/Element"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.fates-mlops/IsMeasuredBy"/>
+                        <owl:someValuesFrom rdf:resource="http://www.fates-mlops/Metric"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.fates-mlops/ValidFor"/>
+                        <owl:someValuesFrom rdf:resource="http://www.fates-mlops/Task"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+    <owl:Class rdf:about="http://www.fates-mlops/Domain"/>
+    
+
+    <owl:Class rdf:about="http://www.fates-mlops/Element">
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.fates-mlops/ImpactsNegatively"/>
+                        <owl:someValuesFrom rdf:resource="http://www.fates-mlops/Domain"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.fates-mlops/ImpactsPositively"/>
+                        <owl:someValuesFrom rdf:resource="http://www.fates-mlops/Domain"/>
+                    </owl:Restriction>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+    <owl:Class rdf:about="http://www.fates-mlops/Metric"/>
+    
+
+    <owl:Class rdf:about="http://www.fates-mlops/Task"/>
+   
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/AlgorithmicBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:Refines rdf:resource="http://www.fates-mlops/Bias"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/AutomationBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:Refines rdf:resource="http://www.fates-mlops/Bias"/>
+    </owl:NamedIndividual>
+
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/ExclusionBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:Refines rdf:resource="http://www.fates-mlops/Bias"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/MeasurementBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:Refines rdf:resource="http://www.fates-mlops/Bias"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/PrejudiceBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:Refines rdf:resource="http://www.fates-mlops/Bias"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/SampleBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:Refines rdf:resource="http://www.fates-mlops/Bias"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/SelectionBias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:Refines rdf:resource="http://www.fates-mlops/Bias"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Bias">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:ImpactsNegatively rdf:resource="http://www.fates-mlops/Fairness"/>
+        <fates-mlops:ImpactsNegatively rdf:resource="http://www.fates-mlops/Ethics"/>
+        <rdfs:comment>Presence of mechanisms that deviate the algorithm from its initial objective, generally unintentionally.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Discrimination">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:ImpactsNegatively rdf:resource="http://www.fates-mlops/Fairness"/>
+        <fates-mlops:ImpactsNegatively rdf:resource="http://www.fates-mlops/Ethics"/>
+        <rdfs:comment>Difference of treatment across sub groups of the population</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/ExplainableAI">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:ImpactsPositively rdf:resource="http://www.fates-mlops/Accountability"/>
+        <fates-mlops:ImpactsPositively rdf:resource="http://www.fates-mlops/Transparency"/>
+        <fates-mlops:ImpactsPositively rdf:resource="http://www.fates-mlops/Fairness"/>
+        <rdfs:comment>Research field to make AI systems more understandable to humans (Adadi2018)</rdfs:comment>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Traceability">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:ImpactsPositively rdf:resource="http://www.fates-mlops/Accountability"/>
+        <fates-mlops:ImpactsPositively rdf:resource="http://www.fates-mlops/Transparency"/>
+        <rdfs:comment>Tracking of actions, versions, data, and decisions.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Answerability">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:ImpactsPositively rdf:resource="http://www.fates-mlops/Accountability"/>
+        <rdfs:comment>Ability to answer questions about the use of AI.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Documentation">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:ImpactsPositively rdf:resource="http://www.fates-mlops/Transparency"/>
+        <rdfs:comment>Description of the AI application.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Morality">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:ImpactsPositively rdf:resource="http://www.fates-mlops/Ethics"/>
+        <rdfs:comment>Analysis of the moral implications of using AI.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Privacy">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:ImpactsPositively rdf:resource="http://www.fates-mlops/Ethics"/>
+        <fates-mlops:ImpactsPositively rdf:resource="http://www.fates-mlops/Safety"/>
+        <fates-mlops:ImpactsPositively rdf:resource="http://www.fates-mlops/Security"/>
+        <rdfs:comment>Protection of individuals in the use of AI.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Alignment">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:ImpactsPositively rdf:resource="http://www.fates-mlops/Safety"/>
+        <rdfs:comment>Consistency between the intended behavior and the behavior obtained through AI training.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Defense">
+        <rdf:type rdf:resource="http://www.fates-mlops/Element"/>
+        <fates-mlops:ImpactsPositively rdf:resource="http://www.fates-mlops/Security"/>
+        <rdfs:comment>Ability to withstand attacks, leaks, and manipulation.</rdfs:comment>
+    </owl:NamedIndividual>
+
+
+
+
+
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Classification">
+        <rdf:type rdf:resource="http://www.fates-mlops/Task"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Language">
+        <rdf:type rdf:resource="http://www.fates-mlops/Task"/>
+    </owl:NamedIndividual>
+
+
+
+
+
+
+    
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Fairness">
+        <rdf:type rdf:resource="http://www.fates-mlops/Domain"/>
+        <rdfs:comment>Control the presence of bias or discrimination in the output</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Accountability">
+        <rdf:type rdf:resource="http://www.fates-mlops/Domain"/>
+        <rdfs:comment>Ensure traceability, accountability and auditability of the output</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Transparency">
+        <rdf:type rdf:resource="http://www.fates-mlops/Domain"/>
+        <rdfs:comment>Make design choices and data accessible; communicate the presence of an AI algorithm; make the model's operation understandable</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Ethics">
+        <rdf:type rdf:resource="http://www.fates-mlops/Domain"/>
+        <rdfs:comment>Control the alignment of AI with human values, avoid intentional or unintentional harmful effects</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Safety">
+        <rdf:type rdf:resource="http://www.fates-mlops/Domain"/>
+        <rdfs:comment>Verify that AI does not cause damage</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Security">
+        <rdf:type rdf:resource="http://www.fates-mlops/Domain"/>
+        <rdfs:comment>Control the resistance of AI to attacks</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+
+
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/DemographicParity">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>State of equality across demographic subgroups for the probability of positive prediction.</rdfs:comment>
+        <fates-mlops:ValidFor rdf:resource="http://www.fates-mlops/Classification"/>
+        <fates-mlops:IsMeasuredBy rdf:resource="http://www.fates-mlops/DisparateImpact"/>
+        <fates-mlops:IsMeasuredBy rdf:resource="http://www.fates-mlops/DemographicParityDifference"/>
+    </owl:NamedIndividual>
+    
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/EqualizedOdds">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>Predictions are independent of the protected attribute, conditional on the outcome.</rdfs:comment>
+        <fates-mlops:ValidFor rdf:resource="http://www.fates-mlops/Classification"/>
+        <fates-mlops:IsMeasuredBy rdf:resource="http://www.fates-mlops/EqualizedOddsRatio"/>        
+        <fates-mlops:IsMeasuredBy rdf:resource="http://www.fates-mlops/EqualizedOddsDifference"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/EqualOpportunity">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>Prediction are independant of the protected attribute when the outcome is positive.</rdfs:comment>
+        <fates-mlops:ValidFor rdf:resource="http://www.fates-mlops/Classification"/>
+        <fates-mlops:IsMeasuredBy rdf:resource="http://www.fates-mlops/EqualOpportunityRatio"/>        
+        <fates-mlops:IsMeasuredBy rdf:resource="http://www.fates-mlops/EqualOpportunityDifference"/>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Robustness">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <fates-mlops:Evaluates rdf:resource="http://www.fates-mlops/ExplainableAI"/>
+        <rdfs:comment>Model's ability to withstand disturbances.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/TreatmentEquality">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>State of equality across demographic subgroups for the probabilities FP and FN.</rdfs:comment>
+        <fates-mlops:ValidFor rdf:resource="http://www.fates-mlops/Classification"/>
+        <fates-mlops:IsMeasuredBy rdf:resource="http://www.fates-mlops/TreatmentEqualityDifference"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/CounterfactualFairness">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>Same prediction for an individual and its counterfactual, known as a version of the same individual transformed to belong in another demographic subgroup.</rdfs:comment>
+        <fates-mlops:ValidFor rdf:resource="http://www.fates-mlops/Classification"/>
+        <fates-mlops:IsMeasuredBy rdf:resource="http://www.fates-mlops/CounterfactualDisparity"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/ConditionalStatisticalParity">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>* Equal rate of positive outcome across demographic groups when a set of "legitimate" attributes are equal</rdfs:comment>
+        <fates-mlops:ValidFor rdf:resource="http://www.fates-mlops/Classification"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/NeutralityInStereotypes">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>Does not give a higher likelihood for tokens related to a cultural stereotype</rdfs:comment>
+        <fates-mlops:ValidFor rdf:resource="http://www.fates-mlops/Language"/>
+        <fates-mlops:IsMeasuredBy rdf:resource="http://www.fates-mlops/CrowSPairsScore"/>
+        <!-- <fates-mlops:IsMeasuredBy rdf:resource="http://www.fates-mlops/StereoSetsScore"/> -->
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Fidelity">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>Satisfied when the interpretable predictor has the same output as the complex predictor</rdfs:comment>        
+        <fates-mlops:Evaluates rdf:resource="http://www.fates-mlops/ExplainableAI"/>
+        <fates-mlops:IsMeasuredBy rdf:resource="http://www.fates-mlops/FidelityScore"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Faithfulness">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>* Satisfied when features identified as important are actually having a great influence in the output.</rdfs:comment>
+        <fates-mlops:Evaluates rdf:resource="http://www.fates-mlops/ExplainableAI"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Interpretability">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>* Degree to which a model can be understood by human</rdfs:comment>
+        <fates-mlops:Evaluates rdf:resource="http://www.fates-mlops/ExplainableAI"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Completeness">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>* Satisfied when the explanation cover any possible input.</rdfs:comment>
+        <fates-mlops:Evaluates rdf:resource="http://www.fates-mlops/ExplainableAI"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Clarity">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>* Satisfied when the explanation is straight forward and easily understood</rdfs:comment>
+        <fates-mlops:Evaluates rdf:resource="http://www.fates-mlops/ExplainableAI"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Complexity">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>* Can describe the size of a model or the number of rules in order to describe it. Inversely related to interpretability.</rdfs:comment>
+        <fates-mlops:Evaluates rdf:resource="http://www.fates-mlops/ExplainableAI"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Monotonicity">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>* Satisfied when features always have either a positive or negative impact on the output</rdfs:comment>
+        <fates-mlops:Evaluates rdf:resource="http://www.fates-mlops/ExplainableAI"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Parsimony">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <rdfs:comment>* Satisfied when the explanation is succint without sacrificing necessary details.</rdfs:comment>
+        <fates-mlops:Evaluates rdf:resource="http://www.fates-mlops/ExplainableAI"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Soundness">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <fates-mlops:Evaluates rdf:resource="http://www.fates-mlops/ExplainableAI"/>
+    </owl:NamedIndividual>
+    
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/Stability">
+        <rdf:type rdf:resource="http://www.fates-mlops/Criteria"/>
+        <fates-mlops:Evaluates rdf:resource="http://www.fates-mlops/ExplainableAI"/>
+    </owl:NamedIndividual>
+    
+    
+    
+    
+    
+    
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/DisparateImpact">
+        <rdf:type rdf:resource="http://www.fates-mlops/Metric"/>
+        <rdfs:comment>Ratio between the proportion of positive prediction in each groups of the Test Data Set. Also named Demographic Parity Ratio.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/DemographicParityDifference">
+        <rdf:type rdf:resource="http://www.fates-mlops/Metric"/>
+        <rdfs:comment>Difference between the proportion of positive prediction in each groups of the Test Data Set.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/EqualizedOddsRatio">
+        <rdf:type rdf:resource="http://www.fates-mlops/Metric"/>
+        <rdfs:comment>Minimum between: - Ratio of true positives in each group - Ratio of false positives in each group.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/EqualizedOddsDifference">
+        <rdf:type rdf:resource="http://www.fates-mlops/Metric"/>
+        <rdfs:comment>Maximum between: - Difference of true positives in each group - Difference of false positives in each group.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/EqualOpportunityRatio">
+        <rdf:type rdf:resource="http://www.fates-mlops/Metric"/>
+        <rdfs:comment>Ratio between the proportion of true positive in each groups of the Test Data Set.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/EqualOpportunityDifference">
+        <rdf:type rdf:resource="http://www.fates-mlops/Metric"/>
+        <rdfs:comment>Difference between the proportion of true positive in each groups of the Test Data Set.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/CrowSPairsScore">
+        <rdf:type rdf:resource="http://www.fates-mlops/Metric"/>
+        <rdfs:comment>Percentage of sentence with a higher likelihood given by the model to the stereotyping version than the other.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/StereoSetScore">
+        <rdf:type rdf:resource="http://www.fates-mlops/Metric"/>
+        <rdfs:comment>Aggregation of a language modeling score and a Stereotype score based on model preferences for Stereotype vs Anti-Stereotype options.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/FidelityScore">
+        <rdf:type rdf:resource="http://www.fates-mlops/Metric"/>
+        <rdfs:comment>Proportion of the Test Data Set that has the same output using the complex model or the explanation model.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/TreatmentEqualityDifference">
+        <rdf:type rdf:resource="http://www.fates-mlops/Metric"/>
+        <rdfs:comment>Difference between the ratio of false positive and false negative of each groups of the Test Data Set.</rdfs:comment>
+    </owl:NamedIndividual>
+
+    <owl:NamedIndividual rdf:about="http://www.fates-mlops/CounterfactualDisparity">
+        <rdf:type rdf:resource="http://www.fates-mlops/Metric"/>
+        <rdfs:comment>Proportion of the Test Data Set that has different output for the prediction and the prediction of the counterfactual.</rdfs:comment>
+    </owl:NamedIndividual>
+</rdf:RDF>

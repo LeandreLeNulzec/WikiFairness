@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Instance Network Explorer</title>
+  <link rel="stylesheet" href="static/style.css">
+    
+<script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+
+<style>
+    /* --- Styles spécifiques pour la page Réseau --- */
+    
+    /* Le conteneur prend presque toute la hauteur de l'écran pour une immersion totale */
+    .graph-container {
+        height: 85vh; /* 85% de la hauteur de la fenêtre */
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .graph-header {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-bottom: 1px solid #ddd;
+        flex-shrink: 0; /* L'en-tête ne rétrécit pas */
+    }
+    .graph-header h2 { margin: 0; font-size: 1.25rem; color: #333; }
+    .graph-header p { margin: 5px 0 0; color: #666; font-size: 0.9rem; }
+
+    /* Zone de dessin du graphe */
+    .mermaid-wrapper {
+        flex-grow: 1; /* Prend tout l'espace restant */
+        background-color: #ffffff;
+        position: relative;
+        overflow: hidden; 
+    }
+    
+    .mermaid {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* =========================================
+       STYLES MERMAID (Identiques à visualizations.html)
+       ========================================= */
+
+    /* Lignes et Flèches (Gris par défaut) */
+    .mermaid .edgePath path {
+        stroke: #666 !important;
+        stroke-width: 1.5px !important;
+    }
+    .mermaid marker path {
+        fill: #666 !important;
+        stroke: #666 !important;
+    }
+
+    /* Étiquettes sur les liens (Fond blanc pour lisibilité) */
+    .mermaid .edgeLabel {
+        background-color: white !important;
+        opacity: 1 !important;
+        color: #333 !important;
+        padding: 2px 4px !important;
+        border-radius: 4px !important;
+    }
+    .mermaid .edgeLabel rect {
+        fill: #ffffff !important;
+        opacity: 1 !important;
+    }
+    .mermaid .edgeLabel p, 
+    .mermaid .edgeLabel span {
+        background-color: white !important;
+        color: #333 !important;
+    }
+
+    /* Noeuds (Orange par défaut) */
+    .node rect, .node polygon, .node circle {
+        fill: #ff6b35 !important;
+        stroke: #e55a2b !important;
+    }
+    .node text {
+        fill: white !important;
+        font-weight: bold !important;
+        font-family: sans-serif;
+    }
+    
+    /* Correctif SVG pour le PanZoom */
+    svg {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+    }
+</style>
+
+</head>
+<body>
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="visualizations.html">📊 Visualizations</a>
+    <a href="network.html">🕸️ Instance Network</a> </nav>
+  </nav>
+  <main>
+    
+<h1>🕸️ Instance Network Explorer</h1>
+<p>Interactive visualization of all instances and their relationships.</p>
+
+<div class="graph-container">
+    <div class="graph-header">
+        <h2>Global Network</h2>
+        <p>Utilisez la molette pour zoomer, et glissez-déposez pour vous déplacer.</p>
+    </div>
+
+    <div class="mermaid-wrapper">
+        <div class="mermaid">
+graph LR
+    %%{init: {"flowchart": {"nodeSpacing": 50, "rankSpacing": 80, "curve": "basis"}}}%%
+    classDef instanceNode fill:#ff6b35,stroke:#e55a2b,stroke-width:2px,color:#fff
+    Accountability["Accountability"]:::instanceNode
+    click Accountability "entities/Accountability.html"
+    AlgorithmicBias["AlgorithmicBias"]:::instanceNode
+    click AlgorithmicBias "entities/AlgorithmicBias.html"
+    Alignment["Alignment"]:::instanceNode
+    click Alignment "entities/Alignment.html"
+    Answerability["Answerability"]:::instanceNode
+    click Answerability "entities/Answerability.html"
+    AutomationBias["AutomationBias"]:::instanceNode
+    click AutomationBias "entities/AutomationBias.html"
+    Bias["Bias"]:::instanceNode
+    click Bias "entities/Bias.html"
+    Clarity["Clarity"]:::instanceNode
+    click Clarity "entities/Clarity.html"
+    Classification["Classification"]:::instanceNode
+    click Classification "entities/Classification.html"
+    Completeness["Completeness"]:::instanceNode
+    click Completeness "entities/Completeness.html"
+    Complexity["Complexity"]:::instanceNode
+    click Complexity "entities/Complexity.html"
+    ConditionalStatisticalParity["ConditionalStatisticalParity"]:::instanceNode
+    click ConditionalStatisticalParity "entities/ConditionalStatisticalParity.html"
+    CounterfactualDisparity["CounterfactualDisparity"]:::instanceNode
+    click CounterfactualDisparity "entities/CounterfactualDisparity.html"
+    CounterfactualFairness["CounterfactualFairness"]:::instanceNode
+    click CounterfactualFairness "entities/CounterfactualFairness.html"
+    CrowSPairsScore["CrowSPairsScore"]:::instanceNode
+    click CrowSPairsScore "entities/CrowSPairsScore.html"
+    Defense["Defense"]:::instanceNode
+    click Defense "entities/Defense.html"
+    DemographicParity["DemographicParity"]:::instanceNode
+    click DemographicParity "entities/DemographicParity.html"
+    DemographicParityDifference["DemographicParityDifference"]:::instanceNode
+    click DemographicParityDifference "entities/DemographicParityDifference.html"
+    Discrimination["Discrimination"]:::instanceNode
+    click Discrimination "entities/Discrimination.html"
+    DisparateImpact["DisparateImpact"]:::instanceNode
+    click DisparateImpact "entities/DisparateImpact.html"
+    Documentation["Documentation"]:::instanceNode
+    click Documentation "entities/Documentation.html"
+    EqualOpportunity["EqualOpportunity"]:::instanceNode
+    click EqualOpportunity "entities/EqualOpportunity.html"
+    EqualOpportunityDifference["EqualOpportunityDifference"]:::instanceNode
+    click EqualOpportunityDifference "entities/EqualOpportunityDifference.html"
+    EqualOpportunityRatio["EqualOpportunityRatio"]:::instanceNode
+    click EqualOpportunityRatio "entities/EqualOpportunityRatio.html"
+    EqualizedOdds["EqualizedOdds"]:::instanceNode
+    click EqualizedOdds "entities/EqualizedOdds.html"
+    EqualizedOddsDifference["EqualizedOddsDifference"]:::instanceNode
+    click EqualizedOddsDifference "entities/EqualizedOddsDifference.html"
+    EqualizedOddsRatio["EqualizedOddsRatio"]:::instanceNode
+    click EqualizedOddsRatio "entities/EqualizedOddsRatio.html"
+    Ethics["Ethics"]:::instanceNode
+    click Ethics "entities/Ethics.html"
+    ExclusionBias["ExclusionBias"]:::instanceNode
+    click ExclusionBias "entities/ExclusionBias.html"
+    ExplainableAI["ExplainableAI"]:::instanceNode
+    click ExplainableAI "entities/ExplainableAI.html"
+    Fairness["Fairness"]:::instanceNode
+    click Fairness "entities/Fairness.html"
+    Faithfulness["Faithfulness"]:::instanceNode
+    click Faithfulness "entities/Faithfulness.html"
+    Fidelity["Fidelity"]:::instanceNode
+    click Fidelity "entities/Fidelity.html"
+    FidelityScore["FidelityScore"]:::instanceNode
+    click FidelityScore "entities/FidelityScore.html"
+    Interpretability["Interpretability"]:::instanceNode
+    click Interpretability "entities/Interpretability.html"
+    Language["Language"]:::instanceNode
+    click Language "entities/Language.html"
+    MeasurementBias["MeasurementBias"]:::instanceNode
+    click MeasurementBias "entities/MeasurementBias.html"
+    Monotonicity["Monotonicity"]:::instanceNode
+    click Monotonicity "entities/Monotonicity.html"
+    Morality["Morality"]:::instanceNode
+    click Morality "entities/Morality.html"
+    NeutralityInStereotypes["NeutralityInStereotypes"]:::instanceNode
+    click NeutralityInStereotypes "entities/NeutralityInStereotypes.html"
+    Parsimony["Parsimony"]:::instanceNode
+    click Parsimony "entities/Parsimony.html"
+    PrejudiceBias["PrejudiceBias"]:::instanceNode
+    click PrejudiceBias "entities/PrejudiceBias.html"
+    Privacy["Privacy"]:::instanceNode
+    click Privacy "entities/Privacy.html"
+    Robustness["Robustness"]:::instanceNode
+    click Robustness "entities/Robustness.html"
+    Safety["Safety"]:::instanceNode
+    click Safety "entities/Safety.html"
+    SampleBias["SampleBias"]:::instanceNode
+    click SampleBias "entities/SampleBias.html"
+    Security["Security"]:::instanceNode
+    click Security "entities/Security.html"
+    SelectionBias["SelectionBias"]:::instanceNode
+    click SelectionBias "entities/SelectionBias.html"
+    Soundness["Soundness"]:::instanceNode
+    click Soundness "entities/Soundness.html"
+    Stability["Stability"]:::instanceNode
+    click Stability "entities/Stability.html"
+    Traceability["Traceability"]:::instanceNode
+    click Traceability "entities/Traceability.html"
+    Transparency["Transparency"]:::instanceNode
+    click Transparency "entities/Transparency.html"
+    TreatmentEquality["TreatmentEquality"]:::instanceNode
+    click TreatmentEquality "entities/TreatmentEquality.html"
+    TreatmentEqualityDifference["TreatmentEqualityDifference"]:::instanceNode
+    click TreatmentEqualityDifference "entities/TreatmentEqualityDifference.html"
+    AlgorithmicBias -- "Refines" --> Bias
+    Alignment -- "ImpactsPositively" --> Safety
+    Answerability -- "ImpactsPositively" --> Accountability
+    AutomationBias -- "Refines" --> Bias
+    Bias -- "ImpactsNegatively" --> Ethics
+    Bias -- "ImpactsNegatively" --> Fairness
+    Clarity -- "Evaluates" --> ExplainableAI
+    Completeness -- "Evaluates" --> ExplainableAI
+    Complexity -- "Evaluates" --> ExplainableAI
+    ConditionalStatisticalParity -- "ValidFor" --> Classification
+    CounterfactualFairness -- "IsMeasuredBy" --> CounterfactualDisparity
+    CounterfactualFairness -- "ValidFor" --> Classification
+    Defense -- "ImpactsPositively" --> Security
+    DemographicParity -- "IsMeasuredBy" --> DemographicParityDifference
+    DemographicParity -- "IsMeasuredBy" --> DisparateImpact
+    DemographicParity -- "ValidFor" --> Classification
+    Discrimination -- "ImpactsNegatively" --> Ethics
+    Discrimination -- "ImpactsNegatively" --> Fairness
+    Documentation -- "ImpactsPositively" --> Transparency
+    EqualOpportunity -- "IsMeasuredBy" --> EqualOpportunityDifference
+    EqualOpportunity -- "IsMeasuredBy" --> EqualOpportunityRatio
+    EqualOpportunity -- "ValidFor" --> Classification
+    EqualizedOdds -- "IsMeasuredBy" --> EqualizedOddsDifference
+    EqualizedOdds -- "IsMeasuredBy" --> EqualizedOddsRatio
+    EqualizedOdds -- "ValidFor" --> Classification
+    ExclusionBias -- "Refines" --> Bias
+    ExplainableAI -- "ImpactsPositively" --> Accountability
+    ExplainableAI -- "ImpactsPositively" --> Fairness
+    ExplainableAI -- "ImpactsPositively" --> Transparency
+    Faithfulness -- "Evaluates" --> ExplainableAI
+    Fidelity -- "Evaluates" --> ExplainableAI
+    Fidelity -- "IsMeasuredBy" --> FidelityScore
+    Interpretability -- "Evaluates" --> ExplainableAI
+    MeasurementBias -- "Refines" --> Bias
+    Monotonicity -- "Evaluates" --> ExplainableAI
+    Morality -- "ImpactsPositively" --> Ethics
+    NeutralityInStereotypes -- "IsMeasuredBy" --> CrowSPairsScore
+    NeutralityInStereotypes -- "ValidFor" --> Language
+    Parsimony -- "Evaluates" --> ExplainableAI
+    PrejudiceBias -- "Refines" --> Bias
+    Privacy -- "ImpactsPositively" --> Ethics
+    Privacy -- "ImpactsPositively" --> Safety
+    Privacy -- "ImpactsPositively" --> Security
+    Robustness -- "Evaluates" --> ExplainableAI
+    SampleBias -- "Refines" --> Bias
+    SelectionBias -- "Refines" --> Bias
+    Soundness -- "Evaluates" --> ExplainableAI
+    Stability -- "Evaluates" --> ExplainableAI
+    Traceability -- "ImpactsPositively" --> Accountability
+    Traceability -- "ImpactsPositively" --> Transparency
+    TreatmentEquality -- "IsMeasuredBy" --> TreatmentEqualityDifference
+    TreatmentEquality -- "ValidFor" --> Classification
+    linkStyle 0 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 1 stroke:#28a745,stroke-width:2px;
+    linkStyle 2 stroke:#28a745,stroke-width:2px;
+    linkStyle 3 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 4 stroke:#dc3545,stroke-width:2px;
+    linkStyle 5 stroke:#dc3545,stroke-width:2px;
+    linkStyle 6 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 7 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 8 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 9 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+    linkStyle 10 stroke:#e83e8c,stroke-width:2px;
+    linkStyle 11 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+    linkStyle 12 stroke:#28a745,stroke-width:2px;
+    linkStyle 13 stroke:#e83e8c,stroke-width:2px;
+    linkStyle 14 stroke:#e83e8c,stroke-width:2px;
+    linkStyle 15 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+    linkStyle 16 stroke:#dc3545,stroke-width:2px;
+    linkStyle 17 stroke:#dc3545,stroke-width:2px;
+    linkStyle 18 stroke:#28a745,stroke-width:2px;
+    linkStyle 19 stroke:#e83e8c,stroke-width:2px;
+    linkStyle 20 stroke:#e83e8c,stroke-width:2px;
+    linkStyle 21 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+    linkStyle 22 stroke:#e83e8c,stroke-width:2px;
+    linkStyle 23 stroke:#e83e8c,stroke-width:2px;
+    linkStyle 24 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+    linkStyle 25 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 26 stroke:#28a745,stroke-width:2px;
+    linkStyle 27 stroke:#28a745,stroke-width:2px;
+    linkStyle 28 stroke:#28a745,stroke-width:2px;
+    linkStyle 29 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 30 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 31 stroke:#e83e8c,stroke-width:2px;
+    linkStyle 32 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 33 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 34 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 35 stroke:#28a745,stroke-width:2px;
+    linkStyle 36 stroke:#e83e8c,stroke-width:2px;
+    linkStyle 37 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+    linkStyle 38 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 39 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 40 stroke:#28a745,stroke-width:2px;
+    linkStyle 41 stroke:#28a745,stroke-width:2px;
+    linkStyle 42 stroke:#28a745,stroke-width:2px;
+    linkStyle 43 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 44 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 45 stroke:#007bff,stroke-width:1px,stroke-dasharray: 5 5;
+    linkStyle 46 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 47 stroke:#6f42c1,stroke-width:2px;
+    linkStyle 48 stroke:#28a745,stroke-width:2px;
+    linkStyle 49 stroke:#28a745,stroke-width:2px;
+    linkStyle 50 stroke:#e83e8c,stroke-width:2px;
+    linkStyle 51 stroke:#fd7e14,stroke-width:2px,stroke-dasharray: 3 3;
+        </div>
+    </div>
+</div>
+
+  </main>
+  
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+    // 1. Configuration de Mermaid
+    mermaid.initialize({ 
+        startOnLoad: false, 
+        theme: 'base',
+        securityLevel: 'loose',
+        flowchart: {
+            useMaxWidth: false, // Important pour le pan/zoom
+            htmlLabels: true
+        },
+        themeVariables: {
+            primaryColor: '#ff6b35',
+            lineColor: '#666666',
+            fontFamily: 'sans-serif'
+        }
+    });
+
+    // 2. Rendu et Activation du Zoom
+    await mermaid.run({
+        querySelector: '.mermaid',
+        postRenderCallback: (id) => {
+            const div = document.getElementById(id);
+            const svg = div.tagName === 'svg' ? div : div.querySelector('svg');
+
+            if (svg) {
+                // S'assurer que le SVG remplit le conteneur
+                svg.style.width = '100%';
+                svg.style.height = '100%';
+                
+                // Initialiser svg-pan-zoom
+                svgPanZoom(svg, {
+                    zoomEnabled: true,
+                    controlIconsEnabled: true,
+                    fit: true,
+                    center: true,
+                    minZoom: 0.1,
+                    maxZoom: 10
+                });
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
