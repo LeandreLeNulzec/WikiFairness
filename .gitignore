@@ -1,0 +1,4 @@
+OntoViz/
+.venv/
+__pycache__/
+requirements.txt
